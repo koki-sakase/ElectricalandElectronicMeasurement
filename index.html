@@ -80,9 +80,124 @@
         </header>
 
         <main class="space-y-8">
-            <!-- 問題セクション -->
+            <!-- 新しい問題セクション -->
             <section class="bg-white p-6 rounded-lg shadow-md">
-                
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2">追加問題</h2>
+
+                <div id="new-q1" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 1 (新)</h3>
+                    <p class="mb-4">次の基本単位は、何定数の数値を定めることにより設定されますか。書きなさい。</p>
+                    <div class="space-y-4 mt-4">
+                        <div>
+                            <p class="mb-2 font-semibold">(1) [mol]</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('new-1a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answernew-1a" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> アボガドロ定数 (N<sub>A</sub>)</div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) [K]</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('new-1b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answernew-1b" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> ボルツマン定数 (k)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="new-q2" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 2 (新)</h3>
+                    <p class="mb-4">月差±15秒の腕時計について、精度を求めなさい。</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label class="text-sm">ペン色:</label>
+                            <input type="color" class="pen-color h-8 w-8" value="#000000">
+                            <label class="text-sm">太さ:</label>
+                            <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 150px;"></canvas>
+                    </div>
+                    <button onclick="showAnswer('new-2')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                    <div id="correct-answernew-2" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                        <span class="font-bold">正解:</span> 約5.8×10<sup>-6</sup> (計算: 15 / (30 * 24 * 60 * 60))
+                    </div>
+                </div>
+
+                <div id="new-q4" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 4 (新)</h3>
+                    <p class="mb-4">次の数をJISに従って有効数字3桁に丸めなさい。その際、必ず根拠を示すこと。</p>
+                    <div class="space-y-4 mt-4">
+                        <div>
+                            <p class="mb-2 font-semibold">(1) 円周率</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('new-4a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answernew-4a" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 3.14 (円周率 π ≈ 3.14159... 4桁目が1なので切り捨て)</div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) 自然対数の底</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('new-4b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answernew-4b" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 2.72 (自然対数の底 e ≈ 2.71828... 4桁目が8なので切り上げ)</div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            
+            <!-- 既存の問題セクション -->
+            <section class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2">既存問題</h2>
+
                 <div id="q1" class="question-container">
                     <h3 class="text-xl font-bold mb-2">問題 1</h3>
                     <p class="mb-4">現在、時間の基本単位[s]は、Cs(セシウム)原子の振動により決定しており、その精度は10<sup>-12</sup>であるという。1[s]の誤差が生じるのに何年かかるか求めなさい。(1年は365日とする)</p>
@@ -364,7 +479,7 @@
                             </div>
                             <button onclick="showAnswer('8a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
                             <div id="correct-answer8a" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
-                                <p><span class="font-bold">イ) 熱電形:</span> T, <span class="font-bold">ロ) 静電形:</span> S</p>
+                                <img data-img-set="q8_1" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-full">
                             </div>
                         </div>
                         <div>
@@ -384,7 +499,7 @@
                             </div>
                              <button onclick="showAnswer('8b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
                             <div id="correct-answer8b" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
-                                <p><span class="font-bold">イ) 鉛直:</span> ⟂, <span class="font-bold">ロ) 水平:</span> —</p>
+                                <img data-img-set="q8_2" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-full">
                             </div>
                         </div>
                          <div>
@@ -404,7 +519,7 @@
                             </div>
                              <button onclick="showAnswer('8c')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
                             <div id="correct-answer8c" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
-                                <p><span class="font-bold">イ) 平衡三相交流:</span> 3⏛, <span class="font-bold">ロ) 交直両用:</span> ⏦</p>
+                                <img data-img-set="q8_3" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-full">
                             </div>
                         </div>
                     </div>
@@ -596,7 +711,10 @@
                 "2": "./fig2.png",
                 "3": "./fig3.png",
                 "4": "./fig4.png",
-                "5": "./fig5.png"
+                "5": "./fig5.png",
+                "q8_1": "./fig_qes8_1.png",
+                "q8_2": "./fig_qes8_2.png",
+                "q8_3": "./fig_qes8_3.png"
             };
 
             document.querySelectorAll('img[data-img-set]').forEach(img => {
@@ -736,4 +854,3 @@
 
 </body>
 </html>
-
