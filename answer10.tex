@@ -1,0 +1,52 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{bm}
+\usepackage{siunitx}
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\title{}
+\author{}
+\date{\today}
+
+
+\section{「定格電圧$15\mathrm{\,\si{\volt}}$、$1.5$級の電圧計」と「定格電圧$150\mathrm{\, \si{\volt}}$、$0.5$級の電圧計」で$10\mathrm{\,\si{\volt}}$の電圧を測定した。誤差が小さいのはどちらですか、理由を添えて答えなさい。}
+
+講義資料$1(\mathrm{p}. 52)$より、指示計器の正確さによる分類は、表\ref{tab1}となる。
+\begin{table}[htbp]
+  \centering
+  \caption{指示計器の正確さによる分類}\label{tab1}
+  \begin{tabular}{cll}
+    \toprule
+    階級&許容誤差&主な用途\\
+    \midrule
+    0.2級&$\pm 0.2 \%$&標準機~(副)\\
+    0.5級&$\pm 0.5 \%$&精密測定\\
+    1.0級&$\pm 1.0 \%$&普通の測定\\
+    1.5級&$\pm 1.5 \%$&工業用の普通の測定\\
+    2.5級&$\pm 2.5 \%$&正確さに重きを置かない測定\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+したがって、「定格電圧$15\mathrm{\,\si{\volt}}$、$1.5$級の電圧計」の最大許容誤差$\delta _{1}$は、
+\begin{align}
+  \begin{split}
+    \delta _{1}=15\times 0.015=0.225 \mathrm{\,\si{\volt}}
+  \end{split}
+\end{align}
+となり、「定格電圧$150\mathrm{\, \si{\volt}}$、$0.5$級の電圧計」の最大許容誤差$\delta _{2}$は、
+\begin{align}
+  \begin{split}
+    \delta _{2}=150 \times 0.005 = 0.65 \mathrm{\,\si{\volt}}
+  \end{split}
+\end{align}
+となる。したがって、$\delta _{1}<\delta _{2}$となるため、誤差が小さいのは「定格電圧$15\mathrm{\,\si{\volt}}$、$1.5$級の電圧計」となる。
+\end{document}

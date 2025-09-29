@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電気電子計測</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .question-container {
+            transition: all 0.3s ease;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        .question-container:first-child {
+            border-top: none;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        .feedback {
+            font-weight: bold;
+            height: 24px;
+        }
+        .correct-answer {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease, max-height 0.5s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .correct-answer.visible {
+            visibility: visible;
+            opacity: 1;
+            max-height: 1000px; /* Adjust as needed */
+        }
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            background-color: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+        .question-image[src]:not([src=""]) {
+             border: 1px solid #e5e7eb;
+             min-height: auto;
+        }
+        .question-image:after {
+            content: attr(alt);
+            text-align: center;
+            padding: 1rem;
+        }
+        .question-image[src]:not([src=""]):after {
+            display: none;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #9ca3af;
+            opacity: 1;
+        }
+        .drawing-canvas {
+            cursor: crosshair;
+            touch-action: none; /* Prevent page scroll on touch/pen devices */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-700">電気電子計測</h1>
+            <p class="text-gray-500 mt-2">問題文を読み、解答を手書きで入力してください。「正答例を表示」または「正答例(PDF)を開く」で答えを確認できます。</p>
+        </header>
+
+        <main class="space-y-8">
+            <!-- 問題セクション -->
+            <section class="bg-white p-6 rounded-lg shadow-md">
+                
+                <div id="q1" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 1</h3>
+                    <p class="mb-4">現在、時間の基本単位[s]は、Cs(セシウム)原子の振動により決定しており、その精度は10<sup>-12</sup>であるという。1[s]の誤差が生じるのに何年かかるか求めなさい。(1年は365日とする)</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label class="text-sm">ペン色:</label>
+                            <input type="color" class="pen-color h-8 w-8" value="#000000">
+                            <label class="text-sm">太さ:</label>
+                            <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 150px;"></canvas>
+                    </div>
+                    <button onclick="showAnswer('1')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                    <div id="correct-answer1" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                        <span class="font-bold">正解:</span> 約 31710 年 (計算: 1 / (10<sup>-12</sup> * 3600 * 24 * 365))
+                    </div>
+                </div>
+                
+                <div id="q2" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 2</h3>
+                    <p class="mb-4">次の数値をJISに従って有効数字3桁に丸めなさい。</p>
+                    <div class="space-y-4 mt-4">
+                        <div>
+                            <p class="mb-2 font-semibold">(1) 15851</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('2a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer2a" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 15900</div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) 0.8605</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('2b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer2b" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 0.861</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="q3" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 3</h3>
+                    <p class="mb-4">次の数値を[ ]内の単位で表しなさい。</p>
+                     <div class="space-y-4 mt-4">
+                        <div>
+                            <p class="mb-2 font-semibold">(1) 30 [A] を [mA] で</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('3a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer3a" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 30000 [mA]</div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) 3000 [kV] を [V] で</p>
+                             <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('3b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer3b" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 3000000 [V]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="q4" class="question-container">
+                     <h3 class="text-xl font-bold mb-2">問題 4</h3>
+                     <p class="mb-4">ある指示電気計器の駆動トルクは、最大振れ角90°において 9.8×10<sup>-6</sup> [Nm] である。これを幅1×10<sup>-3</sup> [m]、厚さ2.3×10<sup>-5</sup> [m] のりん青銅製うず巻ばねで制御する。うず巻ばねの長さを求めなさい。なお、りん青銅の横弾性係数は0.436×10¹¹ [Pa]、Young率は1.2×10¹¹ [Pa]とする。(MPaは10<sup>6</sup> Pa)</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label class="text-sm">ペン色:</label>
+                            <input type="color" class="pen-color h-8 w-8" value="#000000">
+                            <label class="text-sm">太さ:</label>
+                            <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 250px;"></canvas>
+                    </div>
+                    <button onclick="showAnswer('4')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                     <div id="correct-answer4" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                        <span class="font-bold">正解:</span> 約 0.157 [m] (トルク T = (E * b * t<sup>3</sup> * θ) / (12 * L) のねじりに関する式ではなく、Young率Eを使う T = (E * b * t<sup>3</sup> * θ) / (12 * L) は間違い。ここでは制御トルクとして働くので、 T = (G * b * t * θ) / L のような関係式から求める必要があるが、問題のYoung率の提示が不自然。一般的にうずまきばねのトルクは T = (Ewt<sup>3</sup>/12L) * θ で計算されることが多い。)
+                    </div>
+                </div>
+
+                 <div id="q5" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 5</h3>
+                    <img data-img-set="1" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-sm">
+                    <p class="mb-4">図の電流計は最大定格1[mA]、内部抵抗100[Ω]である。この計器を使って多重範囲の電流計・電圧計を設計する。抵抗値R<sub>1</sub>〜R<sub>4</sub>を求めなさい。</p>
+                    <div class="space-y-4 mt-4">
+                         <div>
+                            <p class="mb-2 font-semibold">(1) 100[mA]電流計とするための R<sub>1</sub> [Ω]</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('5a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer5a" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 1.01 [Ω] (100/99)</div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) 10[V]電圧計とするための R<sub>4</sub> [Ω]</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('5b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer5b" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 9900 [Ω]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="q6" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 6</h3>
+                    <img data-img-set="2" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-xs">
+                    <p class="mb-4">ある交流電源を図に示す整流形計器で測定したところ、測定値が <strong>1.08 [mA]</strong> であった。この交流電源の実効値および最大値を求めなさい。(小数第3位を四捨五入)</p>
+                     <div class="space-y-4 mt-4">
+                        <div>
+                            <p class="mb-2 font-semibold">(1) 実効値 [mA]</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('6a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer6a" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 1.20 [mA] (測定値 = 平均値 = 1.08, 実効値 = 平均値 * 1.11)</div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) 最大値 [mA]</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('6b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer6b" class="correct-answer mt-2 p-3 bg-gray-200 rounded"><span class="font-bold">正解:</span> 1.70 [mA] (最大値 = 実効値 * √2)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 記述・導出問題 -->
+            <section class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2">記述・導出・分類問題</h2>
+
+                <div id="q7" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 7</h3>
+                    <p class="mb-4">SI単位に関して、次の問に答えなさい。</p>
+                     <div class="mt-4 space-y-6">
+                        <div>
+                            <label for="answer7a" class="block mb-2 font-semibold">(1) 電流の単位 [A] (アンペア) の定義を記述しなさい。</label>
+                            <textarea id="answer7a" rows="3" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500" placeholder="ここに解答を記述..."></textarea>
+                            <button onclick="showAnswer('7a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer7a" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                                <h4 class="font-bold mb-2">正答例:</h4>
+                                <p><b>(新定義)</b> アンペアは、電気素量 <i>e</i> を 1.602176634×10<sup>-19</sup> C と定めることによって設定される。ここで、Cは A s に等しい。</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) 電圧の単位[V]について、長さ[m]、質量[kg]、時間[s]、電流[A]を用いた組立単位を導きなさい。</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 200px;"></canvas>
+                            </div>
+                             <button onclick="showAnswer('7b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer7b" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                                <h4 class="font-bold mb-2">正答例:</h4>
+                                <p>V = W/A = J/(s・A) = (N・m)/(s・A) = (kg・m/s²・m)/(s・A) = kg·m<sup>2</sup>·s<sup>-3</sup>·A<sup>-1</sup></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="q8" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 8</h3>
+                    <p class="mb-4">次の分類記号を記しなさい。</p>
+                     <div class="mt-4 space-y-6">
+                        <div>
+                            <p class="mb-2 font-semibold">(1) 動作原理に関するもの: イ) 熱電形 ロ) 静電形</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                            <button onclick="showAnswer('8a')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer8a" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                                <p><span class="font-bold">イ) 熱電形:</span> T, <span class="font-bold">ロ) 静電形:</span> S</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">(2) 置き方の姿勢に関するもの: イ) 鉛直 ロ) 水平</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                             <button onclick="showAnswer('8b')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer8b" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                                <p><span class="font-bold">イ) 鉛直:</span> ⟂, <span class="font-bold">ロ) 水平:</span> —</p>
+                            </div>
+                        </div>
+                         <div>
+                            <p class="mb-2 font-semibold">(3) 使用回路等に関するもの: イ) 平衡三相交流 ロ) 交直両用</p>
+                            <div class="drawing-area border border-gray-300 rounded-md">
+                                <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                                    <label class="text-sm">ペン色:</label>
+                                    <input type="color" class="pen-color h-8 w-8" value="#000000">
+                                    <label class="text-sm">太さ:</label>
+                                    <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                                    <div class="ml-auto flex items-center gap-2">
+                                        <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                        <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                                    </div>
+                                </div>
+                                <canvas class="drawing-canvas bg-white" style="width: 100%; height: 100px;"></canvas>
+                            </div>
+                             <button onclick="showAnswer('8c')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                            <div id="correct-answer8c" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                                <p><span class="font-bold">イ) 平衡三相交流:</span> 3⏛, <span class="font-bold">ロ) 交直両用:</span> ⏦</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="q9" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 9</h3>
+                    <p class="mb-4">抵抗値R、長さl、直径dを測定して、円柱状導体の抵抗率ρを間接測定する。誤差伝搬の法則を導出しなさい。</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label for="pen-color-9" class="text-sm">ペン色:</label>
+                            <input type="color" id="pen-color-9" class="pen-color h-8 w-8" value="#000000">
+                            <label for="pen-width-9" class="text-sm">太さ:</label>
+                            <input type="range" id="pen-width-9" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 250px;"></canvas>
+                    </div>
+                    <button onclick="openPdfAnswer('9')" class="mt-2 w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">正答例(PDF)を開く</button>
+                </div>
+
+                 <div id="q10" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 10</h3>
+                    <p class="mb-4">「定格電圧15[V]、1.5級の電圧計」と「定格電圧150[V]、0.5級の電圧計」で10[V]の電圧を測定した。誤差が小さいのはどちらですか、理由を添えて答えなさい。</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label for="pen-color-10" class="text-sm">ペン色:</label>
+                            <input type="color" id="pen-color-10" class="pen-color h-8 w-8" value="#000000">
+                            <label for="pen-width-10" class="text-sm">太さ:</label>
+                            <input type="range" id="pen-width-10" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 250px;"></canvas>
+                    </div>
+                    <button onclick="openPdfAnswer('10')" class="mt-2 w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">正答例(PDF)を開く</button>
+                </div>
+
+                <div id="q11" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 11</h3>
+                    <p class="mb-4">可動コイル形計器に用いる永久磁石に必要な条件を3つ書きなさい。</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label class="text-sm">ペン色:</label>
+                            <input type="color" class="pen-color h-8 w-8" value="#000000">
+                            <label class="text-sm">太さ:</label>
+                            <input type="range" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 200px;"></canvas>
+                    </div>
+                    <button onclick="showAnswer('11')" class="mt-2 w-full sm:w-auto bg-indigo-500 text-white px-6 py-2 rounded-md hover:bg-indigo-600">正答例を表示</button>
+                    <div id="correct-answer11" class="correct-answer mt-2 p-3 bg-gray-200 rounded">
+                        <h4 class="font-bold mb-2">正答例:</h4>
+                        <p>
+                            ・残留磁束密度が高い<br>
+                            ・保磁力が大きい<br>
+                            ・温度による磁束の変化が小さい<br>
+                            ・加工が容易<br>
+                            ・価格が低い
+                        </p>
+                    </div>
+                </div>
+
+                <div id="q12" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 12</h3>
+                    <p class="mb-4">0[℃]における抵抗、抵抗温度係数が、それぞれR<sub>1</sub>, α<sub>1</sub>とR<sub>2</sub>, α<sub>2</sub>である2つの抵抗線を直列に接続する。合成抵抗温度係数を求めなさい。</p>
+                     <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label for="pen-color-12" class="text-sm">ペン色:</label>
+                            <input type="color" id="pen-color-12" class="pen-color h-8 w-8" value="#000000">
+                            <label for="pen-width-12" class="text-sm">太さ:</label>
+                            <input type="range" id="pen-width-12" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 250px;"></canvas>
+                    </div>
+                    <button onclick="openPdfAnswer('12')" class="mt-2 w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">正答例(PDF)を開く</button>
+                </div>
+
+                <div id="q13" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 13</h3>
+                    <img data-img-set="3" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-lg">
+                    <p class="mb-4">内部抵抗がr<sub>a</sub>[Ω]の電流計とr<sub>v</sub>[Ω]の電圧計がある。これらを用いて、未知抵抗R[Ω]を測定する場合、図のような回路(a)と(b)が考えられる。回路(a)と(b)の電流計の指針がそれぞれI<sub>a</sub>[A]とI<sub>b</sub>[A]となり、電圧計の指針がそれぞれV<sub>a</sub>[V]とV<sub>b</sub>[V]になったとして、次の問いに答えなさい。</p>
+                    
+                    <div class="ml-4 mt-4 space-y-2 text-gray-700">
+                        <p><b>(1)</b> 計器の内部抵抗を考慮した場合、回路(a)と(b)で測定値からRを求める式をそれぞれ示しなさい。</p>
+                        <p><b>(2)</b> |ΔR/R|≦0.01 の精度で測定するためには、Rと内部抵抗の間にどのような関係があればよいか。回路(a)と(b)それぞれについて答えなさい。</p>
+                        <p><b>(3)</b> 内部抵抗を無視して測定値のみでRの値を求める場合、それぞれどのようなRの範囲の測定に適しているか答えなさい。</p>
+                    </div>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label for="pen-color-13" class="text-sm">ペン色:</label>
+                            <input type="color" id="pen-color-13" class="pen-color h-8 w-8" value="#000000">
+                            <label for="pen-width-13" class="text-sm">太さ:</label>
+                            <input type="range" id="pen-width-13" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 300px;"></canvas>
+                    </div>
+                    <button onclick="openPdfAnswer('13')" class="mt-4 w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">正答例(PDF)を開く</button>
+                </div>
+
+                 <div id="q14" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 14</h3>
+                    <img data-img-set="4" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-sm">
+                    <p class="mb-4">図の回路において、AB間のインピーダンスが周波数と無関係になるときのCの値を求めなさい。なお、C以外の素子の値は既知であるとし、また、ωCr &lt;&lt; 1とみなせるものとします。</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label for="pen-color-14" class="text-sm">ペン色:</label>
+                            <input type="color" id="pen-color-14" class="pen-color h-8 w-8" value="#000000">
+                            <label for="pen-width-14" class="text-sm">太さ:</label>
+                            <input type="range" id="pen-width-14" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 250px;"></canvas>
+                    </div>
+                     <button onclick="openPdfAnswer('14')" class="mt-2 w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">正答例(PDF)を開く</button>
+                </div>
+                
+                <div id="q15" class="question-container">
+                    <h3 class="text-xl font-bold mb-2">問題 15</h3>
+                    <img data-img-set="5" src="" alt="画像パスをコード内で設定してください" class="question-image max-w-sm">
+                    <p class="mb-4">図に示す容量型変圧器において、電圧計のインピーダンスの影響を除くための条件を求めなさい。</p>
+                    <div class="drawing-area border border-gray-300 rounded-md mt-2">
+                        <div class="controls bg-gray-100 p-2 border-b flex items-center gap-2 md:gap-4 flex-wrap">
+                            <label for="pen-color-15" class="text-sm">ペン色:</label>
+                            <input type="color" id="pen-color-15" class="pen-color h-8 w-8" value="#000000">
+                            <label for="pen-width-15" class="text-sm">太さ:</label>
+                            <input type="range" id="pen-width-15" class="pen-width w-24" min="1" max="10" value="2">
+                            <div class="ml-auto flex items-center gap-2">
+                                <button class="undo-canvas bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm">一つ戻す</button>
+                                <button class="clear-canvas bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">消去</button>
+                            </div>
+                        </div>
+                        <canvas class="drawing-canvas bg-white" style="width: 100%; height: 250px;"></canvas>
+                    </div>
+                    <button onclick="openPdfAnswer('15')" class="mt-2 w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">正答例(PDF)を開く</button>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function showAnswer(questionId) {
+            const correctAnswerEl = document.getElementById('correct-answer' + questionId);
+            correctAnswerEl.classList.toggle('visible');
+        }
+        
+        function openPdfAnswer(questionId) {
+            const path = pdfPaths[questionId];
+            if (path && path.trim() !== "") {
+                window.open(path, '_blank');
+            } else {
+                console.error(`PDF path for question ${questionId} is not set in pdfPaths object.`);
+            }
+        }
+
+        const pdfPaths = {
+            "9": "./answer9.pdf",
+            "10": "./answer10.pdf",
+            "12": "./answer12.pdf",
+            "13": "./answer13.pdf",
+            "14": "./answer14.pdf",
+            "15": "./answer15.pdf"
+        };
+        
+        function updateImagePaths() {
+            const imagePaths = {
+                "1": "./fig1.png",
+                "2": "./fig2.png",
+                "3": "./fig3.png",
+                "4": "./fig4.png",
+                "5": "./fig5.png"
+            };
+
+            document.querySelectorAll('img[data-img-set]').forEach(img => {
+                const setNumber = img.dataset.imgSet;
+                const path = imagePaths[setNumber];
+                
+                if (path) {
+                    img.src = path;
+                    img.alt = `回路図 ${setNumber}`;
+                } else {
+                    img.src = "";
+                    img.alt = `画像パス (図${setNumber}) をコード内で設定してください`;
+                }
+            });
+        }
+        
+        function setupDrawingCanvas(container) {
+            if (!container) return;
+
+            const canvas = container.querySelector('.drawing-canvas');
+            const colorPicker = container.querySelector('.pen-color');
+            const widthSlider = container.querySelector('.pen-width');
+            const clearButton = container.querySelector('.clear-canvas');
+            const undoButton = container.querySelector('.undo-canvas');
+
+            if (!canvas || !colorPicker || !widthSlider || !clearButton || !undoButton) return;
+            const ctx = canvas.getContext('2d');
+            let history = [];
+            
+            function resizeCanvas() {
+                if (canvas.offsetWidth === 0 || canvas.offsetHeight === 0) return;
+
+                const lastState = (history.length > 0) ? history[history.length - 1] : null;
+
+                const ratio = window.devicePixelRatio || 1;
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                ctx.scale(ratio, ratio);
+                
+                if (lastState) {
+                    ctx.putImageData(lastState, 0, 0);
+                }
+            }
+            
+            function saveState() {
+                if (canvas.width === 0 || canvas.height === 0) return;
+                if (canvas.width * canvas.height > 16000000) return;
+                history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+                if (history.length > 30) { 
+                    history.shift();
+                }
+            }
+
+            function restoreState() {
+                if (history.length <= 1) { 
+                    clearCanvas();
+                    return;
+                }
+                history.pop();
+                const lastState = history[history.length - 1];
+                ctx.putImageData(lastState, 0, 0);
+            }
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                history = [];
+                saveState();
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            saveState();
+
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            function getCoords(e) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
+
+            function startDrawing(e) {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                isDrawing = true;
+                const { x, y } = getCoords(e);
+                [lastX, lastY] = [x, y];
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                e.preventDefault();
+                
+                const { x, y } = getCoords(e);
+                
+                ctx.strokeStyle = colorPicker.value;
+                ctx.lineWidth = widthSlider.value;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+
+                [lastX, lastY] = [x, y];
+            }
+
+            function stopDrawing() {
+                if (!isDrawing) return;
+                isDrawing = false;
+                saveState();
+            }
+
+            canvas.addEventListener('pointerdown', startDrawing);
+            canvas.addEventListener('pointermove', draw);
+            canvas.addEventListener('pointerup', stopDrawing);
+            canvas.addEventListener('pointerleave', stopDrawing);
+
+            clearButton.addEventListener('click', clearCanvas);
+            undoButton.addEventListener('click', restoreState);
+        }
+        
+        window.onload = function() {
+            updateImagePaths();
+            
+            document.querySelectorAll('.question-container').forEach(container => {
+                 if (container.querySelector('.drawing-canvas')) {
+                    setupDrawingCanvas(container);
+                 }
+            });
+        };
+    </script>
+
+</body>
+</html>
+

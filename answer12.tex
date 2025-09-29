@@ -1,0 +1,47 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{bm}
+\usepackage{siunitx}
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\title{}
+\author{}
+\date{\today}
+
+
+\section{$0\mathrm{\,\si{\celsius}}$における抵抗、抵抗温度係数が、それぞれ$R_{1},\, \alpha _1$と$R_{2},\, \alpha _{2}$である2つの抵抗線を直列に接続する。合成抵抗温度係数を求めなさい。}
+
+全体の合成抵抗を$R$、温度を$t$、求める合成抵抗温度計数を$\alpha $とすると、
+\begin{align}
+  \begin{split}
+    R(1+\alpha t)&=R_{1}(1+\alpha _{1}t)+R_{2}(1+\alpha _{2}t)\\
+    R+\alpha tR&=R_{1}+\alpha _{1}tR_{1}+R_{2}+\alpha _{2}tR_{2}\\
+    &=R_{1}+R_{2}+t(\alpha _{1}R_{1}+\alpha _{2}R_{2})\label{eq1}
+  \end{split}
+\end{align}
+よって、両辺を比較すると、
+\begin{align}
+  R&=R_{1}+R{2}\label{eq2}\\
+  \alpha R&=\alpha _{1}R_{1}+\alpha _{2}R_{2}\label{eq3}
+\end{align}
+したがって、式\eqref{eq2},~\eqref{eq3}より、
+\begin{align}
+  \begin{split}
+    \alpha (R_{1}+R{2})
+    &=\alpha _{1}R_{1}+\alpha _{2}R_{2}\\
+    \alpha
+    &=\frac{\alpha _{1}R_{1}+\alpha _{2}R_{2}}{R_{1}+R{2}}
+    \label{eq4}
+  \end{split}
+\end{align}
+となる。
+
+\end{document}

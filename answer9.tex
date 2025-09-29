@@ -1,0 +1,59 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{bm}
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+
+
+\begin{document}
+
+\title{a}
+\author{a}
+\date{\today}
+
+\section*{問題$9$. 抵抗値$R$、長さ$l$、直径$d$を測定して、円柱状導体の抵抗率$\rho $を間接測定する。誤差伝搬の法則を導出しなさい。}
+
+抵抗$R$は、長さ$l$、直径$d$、抵抗率$\rho $の円柱状導体のとき
+\begin{align}
+  \begin{split}
+    R=\rho \times \frac{l}{\pi {\left(\frac{d}{2}\right)}^{2}}
+    \label{eq1}
+  \end{split}
+\end{align}
+したがって、
+\begin{align}
+  \begin{split}
+    \rho
+    &=R \times \frac{{\pi \left(\frac{d}{2}\right)}^{2}}{l}\\
+    &=\frac{\pi R d^{2}}{4l}\\
+    &=\frac{\pi }{4}R^{1} d^{2} l^{-1}
+    \label{eq2}
+  \end{split}
+\end{align}
+
+講義資料$1(\mathrm{p}. 26)$より、誤差率の一般的な関数は、
+\begin{align}
+  \begin{split}
+    \left|\Delta y\right|\leq \left|\frac{\partial f}{\partial x_{1}}\Delta x_{1}\right|+\left|\frac{\partial f}{\partial x_{2}}\Delta x_{2}\right|+\left|\frac{\partial f}{\partial x_{3}}\Delta x_{3}\right|+\cdots +\left|\frac{\partial f}{\partial x_{n}}\Delta x_{n}\right|
+    \label{eq3}
+  \end{split}
+\end{align}
+となる。したがって、式\eqref{eq2}$,\ $\eqref{eq3}より、
+\begin{align}
+  \begin{split}
+    \left|\Delta \rho\right|
+    &\leq \left|\frac{\partial \rho }{\partial R}\Delta R\right|+\left|\frac{\partial \rho }{\partial d}\Delta d\right|+\left|\frac{\partial \rho }{\partial l}\Delta l\right|\\
+    &\leq \left|\frac{\pi d^{2}}{4l}\Delta R\right|+\left|\frac{2\pi R d}{4l}\Delta d\right|+\left|\frac{-\pi R d^{2}}{4l^{2}}\Delta l\right|\\
+    \left|\frac{\Delta \rho}{\rho}\right|
+    &\leq \left|\frac{\frac{\pi d^{2}}{4l}}{\frac{\pi R d^{2}}{4l}}\Delta R\right|+\left|\frac{\frac{2\pi R d}{4l}}{\frac{\pi R d^{2}}{4l}}\Delta d\right|+\left|\frac{\frac{-\pi R d^{2}}{4l^{2}}}{\frac{\pi R d^{2}}{4l}}\Delta l\right|\\
+    &\leq \left|\frac{\Delta R}{R}\right|+2\left|\frac{\Delta d}{d}\right|-\left|\frac{\Delta l}{l}\right|
+    \label{eq4}
+  \end{split}
+\end{align}
+
+となり、題意における誤差伝搬の法則は式\eqref{eq4}となる。
+
+\end{document}
