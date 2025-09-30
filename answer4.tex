@@ -1,0 +1,42 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+
+% 数式
+\usepackage{amsmath,amsfonts}
+\usepackage{bm}
+\usepackage{siunitx}
+% 画像
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\title{}
+\author{}
+\date{\today}
+
+
+\section{ある指示電気計器の駆動トルクは、最大振れ角$90\si{\degree}$において $9.8\times 10^{-6}\mathrm{\,\si{\newton \metre}}$ である。これを幅$1\times 10^{-3} \mathrm{\,\si{\metre}}$、厚さ$2.3\times 10^{-5}\mathrm{\,\si{\metre}}$のりん青銅製うず巻ばねで制御する。うず巻ばねの長さを求めなさい。なお、りん青銅の横弾性係数は$0.436\times 10^{11}\mathrm{\,\si{\pascal}}$、Young率は$1.2\times 10^{11} \mathrm{\,\si{\pascal}}$とする。($\mathrm{\si{\mega \pascal}}$は$10^{6}\mathrm{\,\si{\pascal}}$)}
+
+制御力$\tau _{C}$は、
+\begin{align}
+  \begin{split}
+    \tau _{C}=k\theta =\frac{Ebt^{3}\theta }{12l}
+    \label{eq1}
+  \end{split}
+\end{align}
+となり、駆動トルクと制御力は等しいことを考えると、ばねの長さ$l$は、
+\begin{align}
+  \begin{split}
+    l
+    &=\frac{Ebt^{3}\theta }{12\tau _{C}}\\
+    &=\frac{1.2\times 10^{11}\cdot 1\times 10^{-3}\cdot (2.3\times 10^{-5})^{3}\cdot \frac{\pi}{2} }{12\times 9.8\times 10^{-6}}\\
+    &\simeq 1.95 \times 10^{-2}\\
+    &\simeq 0.020\mathrm{\,\si{\metre}}
+    \label{eq2}
+  \end{split}
+\end{align}
+となる。
+
+\end{document}
